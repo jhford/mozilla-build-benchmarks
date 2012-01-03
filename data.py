@@ -24,7 +24,7 @@ def find_stddev(a,b):
         deviations += deviation * deviation
     return math.sqrt(deviations / (len(times) - 1))
 
-def find_average_from_file(filename):
+def process_file(filename):
     # Strip trailing commas
     data_file = open(filename)
     mem_data = StringIO.StringIO()
@@ -48,7 +48,7 @@ def find_average_from_file(filename):
 if len(sys.argv) != 2:
     exit(1)
 
-headers, data = find_average_from_file(sys.argv[1])
+headers, data = process_file(sys.argv[1])
 
 print "Average end to end Time: %s, stddev: %s" % (find_average_time(data[headers[0]], data[headers[-1]]), find_stddev(data[headers[0]], data[headers[-1]]))
 for i in range(1,len(headers)):
