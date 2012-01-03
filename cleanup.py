@@ -19,15 +19,12 @@ def process_file(filename):
     reader = csv.reader(mem_data)
 
     headers = reader.next()
-    print >> outputfile, ','.join([x.replace('start', '') for x in headers[:-1]])
+    print >> outputfile, ','.join([x.replace('start', '') for x in headers[:-1]])+',total'
     for row in reader:
         if len(row) == len(headers):
             for i in range(1,len(headers)):
-                outputfile.write(str(int(row[i]) - int(row[i-1])))
-                if i+1 == len(headers):
-                    outputfile.write("\n")
-                else:
-                    outputfile.write(",")
+                outputfile.write(str(int(row[i]) - int(row[i-1])) + ',')
+            outputfile.write(str(int(row[len(headers)-1]) - int(row[0])) + '\n')
 
 if len(sys.argv) <= 1:
     exit(1)
