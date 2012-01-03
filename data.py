@@ -3,12 +3,26 @@
 import csv
 import sys
 import StringIO
+import math
 
-def find_average_time(a,b):
+def get_times(a,b):
     times=[]
     for i in range(0, len(a)):
         times.append(b[i] - a[i])
+    return times
+
+def find_average_time(a,b):
+    times=get_times(a,b)
     return sum(times, 0.0) / len(times)
+
+def find_stddev(a,b):
+    times = get_times(a,b)
+    mean = find_average_time(a,b)
+    deviations = 0
+    for i in times:
+        deviation = i - mean
+        deviations += deviation * deviation
+    return math.sqrt(deviations / (len(times) - 1))
 
 def find_average_from_file(filename):
     # Strip trailing commas
@@ -36,6 +50,6 @@ if len(sys.argv) != 2:
 
 headers, data = find_average_from_file(sys.argv[1])
 
-print "Average end to end Time: ", find_average_time(data[headers[0]], data[headers[-1]])
+print "Average end to end Time: %s, stddev: %s" % (find_average_time(data[headers[0]], data[headers[-1]]), find_stddev(data[headers[0]], data[headers[-1]]))
 for i in range(1,len(headers)):
-    print 'Average time from %s to %s: %s' % (headers[i-1], headers[i], find_average_time(data[headers[i-1]], data[headers[i]]))
+    print 'Average time from %s to %s: %s, stddev: %s' % (headers[i-1], headers[i], find_average_time(data[headers[i-1]], data[headers[i]]), find_stddev(data[headers[i-1]], data[headers[i]]))
