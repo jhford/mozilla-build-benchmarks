@@ -55,7 +55,8 @@ while true ; do
   sed -i -e "s/MacOSX10.5.sdk/MacOSX10.6.sdk/" build/macosx/universal/mozconfig.common
   # On lion with macports, there is a weird error where the buildsymbols step
   # complains about the MAC_DEPLOYMENT_VERSION (or something like that)
-  echo "ac_add_options --enable-macos-target=10.7" >> .mozconfig
+  $ECHO "ac_add_options --enable-macos-target=10.7" >> .mozconfig
+  sed -i -e "s/-j4/-j8" .mozconfig
   $MAKE -f client.mk build
   popd > /dev/null # leave topsrcdir
   t # packagestart
