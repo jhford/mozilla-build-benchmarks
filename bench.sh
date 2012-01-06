@@ -56,7 +56,7 @@ while true ; do
   # On lion with macports, there is a weird error where the buildsymbols step
   # complains about the MAC_DEPLOYMENT_VERSION (or something like that)
   $ECHO "ac_add_options --enable-macos-target=10.7" >> .mozconfig
-  sed -i -e "s/-j4/-j8/" .mozconfig
+  sed -i -e "s/-j4/-j2/" .mozconfig
   $MAKE -f client.mk build
   popd > /dev/null # leave topsrcdir
   t # packagestart
